@@ -1,0 +1,84 @@
+<!DOCTYPEhtml>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidate Information Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <style>
+        body {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        .container {
+            margin-top: 50px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            background-color: white;
+        }
+        .form-control {
+            margin-bottom: 15px;
+        }
+        .btn {
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 class="text-center">Candidate Information Form</h2>
+    <form id="candidateForm" action="/submit" method="post">
+        <div class="mb-3">
+            <label for="startRoll" class="form-label">Start Roll</label>
+            <input type="text" class="form-control" id="startRoll" name="start_roll" required>
+        </div>
+        <div class="mb-3">
+            <label for="endRoll" class="form-label">End Roll</label>
+            <input type="text" class="form-control" id="endRoll" name="end_roll" required>
+        </div>
+        <div class="mb-3">
+            <label for="candidateName" class="form-label">Name of the Candidate</label>
+            <input type="text" class="form-control" id="candidateName" name="candidate_name" required>
+        </div>
+        <div class="mb-3">
+            <label for="fathersName" class="form-label">Father's Name</label>
+            <input type="text" class="form-control" id="fathersName" name="fathers_name" required>
+        </div>
+        <div class="mb-3">
+            <label for="mothersName" class="form-label">Mother's Name</label>
+            <input type="text" class="form-control" id="mothersName" name="mothers_name" required>
+        </div>
+        <div class="mb-3">
+            <label for="educationLevel" class="form-label">Education Level</label>
+            <select class="form-select" id="educationLevel" name="education_level">
+                <option value="" disabled selected>Select your option</option>
+                <option value="HSC">HSC</option>
+                <option value="SSC">SSC</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="yearName" class="form-label">Year</label>
+            <input type="number" class="form-control" id="yearName" name="year_name" placeholder="Enter Year (e.g., 2024)" required min=2000 max=2100>
+        </div>
+    
+        <button type="submit" class="btn btn-primary w-100">Submit</button>
+    </form>
+
+    <button id='downloadBtn' style='display:none;' class='btn btn-success w-100 mt-3'>Download CSV</button>
+
+    <!-- CSV Download Logic -->
+    <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
+
+</div>
+
+</body>
+</html> 
