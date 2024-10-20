@@ -1,10 +1,10 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_file
 import csv  
 import os
 import time
-
+from selenium.webdriver.chrome.options import Options
 app = Flask(__name__)
 
 @app.route('/')
@@ -14,7 +14,9 @@ def home():
 @app.route('/submit', methods=['POST'])
 def submit():
     global driver
-    driver = webdriver.Chrome()
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")  # Run Chrome in headless mode
+    driver = webdriver.Chrome(options=chrome_options)
     data = {
         'start_roll': request.form['start_roll'],
         'end_roll': request.form['end_roll'],
@@ -30,7 +32,7 @@ def submit():
         start = int(data["start_roll"])
         end = int(data["end_roll"])
         name_of_student = data["candidate_name"].upper()
-        name_of_a_parent = data["fathers_name"]
+        name_of_a_parent = data["fathers_name"].upper()
 
         # Only 2024 is available for now
         urls = [
@@ -89,6 +91,11 @@ def submit():
         print(f"Error: {e}")
 
     return jsonify({"message": "Data submitted successfully!"}), 200
+@app.route('/download_csv')
+def download_csv():
+    # Ensure the CSV file is generated and available at this path
+    path_to_csv = 'result.csv'  # Adjust the path if necessary
+    return send_file(path_to_csv, as_attachment=True, download_name='result.csv')
 
 if __name__ == "__main__":
     app.run(debug=True)

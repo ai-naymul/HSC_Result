@@ -30,6 +30,15 @@
             background-color: #007bff;
             color: white;
         }
+        #loadingSpinner {
+            display: none;
+            margin-top: 10px;
+        }
+        #progressMessage {
+            margin-top: 10px;
+            font-size: 18px;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -73,12 +82,47 @@
         <button type="submit" class="btn btn-primary w-100">Submit</button>
     </form>
 
+    <div id="progressMessage">Processing... Please wait!</div>
+    <div id="loadingSpinner" class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+
     <button id='downloadBtn' style='display:none;' class='btn btn-success w-100 mt-3'>Download CSV</button>
 
     <!-- CSV Download Logic -->
     <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
 
+    <script>
+        $(document).ready(function() {
+            $('#candidateForm').on('submit', function(event) {
+                event.preventDefault(); // Prevent the form from submitting immediately
+                $('#progressMessage').show();
+                $('#loadingSpinner').show();
+
+                $.ajax({
+                    url: '/submit',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        $('#progressMessage').text('Submission successful!');
+                        $('#loadingSpinner').hide();
+                        $('#downloadBtn').show();
+                    },
+                    error: function(xhr, status, error) {
+                        $('#progressMessage').text('An error occurred. Please try again.');
+                        $('#loadingSpinner').hide();
+                    }
+                });
+            });
+
+            // New logic for downloading the CSV
+            $('#downloadBtn').on('click', function() {
+                window.location.href = '/download_csv'; // Adjust the URL to match your server endpoint
+            });
+        });
+    </script>
+
 </div>
 
 </body>
-</html> 
+</html>
