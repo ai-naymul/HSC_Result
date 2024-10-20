@@ -70,7 +70,7 @@ def submit():
                     file_exists = os.path.isfile("result.csv")
                     is_empty = os.stat("result.csv").st_size == 0 if file_exists else True
 
-                    with open("result.csv", "a", newline='') as file:
+                    with open("result.csv", "w", newline='') as file:
                         writer = csv.writer(file)
                         
                         # Write the header if the file is empty
